@@ -1,0 +1,26 @@
+{
+  "name": "nfc-application",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node scripts/patch-react-native-gradle-plugin.js",
+    "start": "expo start",
+    "prebuild:android": "expo prebuild --platform android",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "build:android:debug": "cd android && gradlew.bat assembleDebug",
+    "build:android:release": "cd android && gradlew.bat assembleRelease"
+  },
+  "dependencies": {
+    "expo": "56.0.12",
+    "expo-linking": "56.0.14",
+    "expo-status-bar": "56.0.4",
+    "react": "19.2.3",
+    "react-native": "0.85.3"
+  },
+  "devDependencies": {
+    "eas-cli": "^20.2.0"
+  }
+}

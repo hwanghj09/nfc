@@ -1,0 +1,16 @@
+{
+  "name": "nfc-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Next.js NFC web bridge and data server",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^16.2.9",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "NFC Greeting",
+    "owner": "hwanghj09",
+    "slug": "nfc-greeting",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "nfcdemo",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "com.zstrit.nfcgreeting"
+    },
+    "android": {
+      "package": "com.zstrit.nfcgreeting",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": {
+            "scheme": "nfcdemo",
+            "host": "app"
+          },
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "64b876d9-3754-41ea-995a-a01e016f0662"
+      }
+    }
+  }
+}
