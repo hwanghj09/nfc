@@ -1,98 +1,91 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import { defaultName, productionOrigin } from '@/lib/nfc-link';
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+const greeting = `\uC548\uB155\uD558\uC138\uC694 ${defaultName}\uB2D8`;
 
 export default function HomeScreen() {
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.eyebrow}>NFC demo</Text>
+        <Text style={styles.title}>NFC URL to app</Text>
+        <Text style={styles.subtitle}>
+          Put this web URL on the NFC card. The web page opens the app when it is installed.
+        </Text>
+      </View>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      <View style={styles.panel}>
+        <Text style={styles.label}>NFC card URL</Text>
+        <Text selectable style={styles.url}>
+          {productionOrigin}/api?name={defaultName}
+        </Text>
+      </View>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+      <View style={styles.panel}>
+        <Text style={styles.label}>Also supported</Text>
+        <Text selectable style={styles.url}>
+          {productionOrigin}/api?={defaultName}
+        </Text>
+      </View>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+      <Text style={styles.note}>When the app receives the value, it shows: {greeting}</Text>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    gap: 18,
+    padding: 24,
+    backgroundColor: '#f7f4ee',
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+  header: {
+    gap: 10,
+    paddingTop: 28,
+    paddingBottom: 10,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
+  eyebrow: {
+    color: '#186a5b',
+    fontSize: 13,
+    fontWeight: '700',
     textTransform: 'uppercase',
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  title: {
+    color: '#171717',
+    fontSize: 32,
+    fontWeight: '800',
+    lineHeight: 38,
+  },
+  subtitle: {
+    color: '#53514b',
+    fontSize: 16,
+    lineHeight: 23,
+  },
+  panel: {
+    gap: 10,
+    padding: 16,
+    borderRadius: 8,
+    backgroundColor: '#ffffff',
+    borderColor: '#ded7ca',
+    borderWidth: 1,
+  },
+  label: {
+    color: '#777065',
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  url: {
+    color: '#0f4f45',
+    fontSize: 17,
+    fontWeight: '800',
+    lineHeight: 24,
+  },
+  note: {
+    color: '#6a665f',
+    fontSize: 16,
+    lineHeight: 23,
   },
 });
