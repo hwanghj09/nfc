@@ -1,4 +1,4 @@
-export const DEFAULT_NAME = 'hi';
+export const DEFAULT_NAME = '방문자';
 export const APP_SCHEME = 'nfcdemo';
 
 function safeDecode(value) {
@@ -36,12 +36,21 @@ export function getNameFromRequest({ slug = [], searchParams = {} }) {
 
   const segments = Array.isArray(slug) ? slug : [];
   const firstSegment = segments[0] ?? '';
+  const decodedFirstSegment = safeDecode(firstSegment);
 
-  if (firstSegment.startsWith('api=')) {
-    return normalizeName(safeDecode(firstSegment.slice('api='.length)));
+  if (decodedFirstSegment.startsWith('api=')) {
+    return normalizeName(decodedFirstSegment.slice('api='.length));
+  }
+
+  if (decodedFirstSegment.startsWith('name=')) {
+    return normalizeName(decodedFirstSegment.slice('name='.length));
   }
 
   if (firstSegment === 'api' && segments[1]) {
+    return normalizeName(safeDecode(segments[1]));
+  }
+
+  if (firstSegment === 'name' && segments[1]) {
     return normalizeName(safeDecode(segments[1]));
   }
 

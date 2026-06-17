@@ -1,4 +1,4 @@
-export const DEFAULT_NAME = 'hi';
+export const DEFAULT_NAME = '방문자';
 export const WEB_ORIGIN = 'https://nfc.zstrit.com';
 export const APP_SCHEME = 'nfcdemo';
 
@@ -16,14 +16,26 @@ export function normalizeName(value) {
 }
 
 export function getNameFromPathname(pathname) {
-  const apiEquals = pathname.match(/^\/?api=(.+)$/);
+  const decodedPathname = safeDecode(pathname);
+
+  const apiEquals = decodedPathname.match(/^\/?api=(.+)$/);
   if (apiEquals) {
-    return normalizeName(safeDecode(apiEquals[1]));
+    return normalizeName(apiEquals[1]);
   }
 
-  const apiPath = pathname.match(/^\/api\/([^/]+)$/);
+  const nameEquals = decodedPathname.match(/^\/?name=(.+)$/);
+  if (nameEquals) {
+    return normalizeName(nameEquals[1]);
+  }
+
+  const apiPath = decodedPathname.match(/^\/api\/([^/]+)$/);
   if (apiPath) {
-    return normalizeName(safeDecode(apiPath[1]));
+    return normalizeName(apiPath[1]);
+  }
+
+  const namePath = decodedPathname.match(/^\/name\/([^/]+)$/);
+  if (namePath) {
+    return normalizeName(namePath[1]);
   }
 
   return DEFAULT_NAME;
@@ -58,5 +70,5 @@ export function buildAppLink(name) {
 }
 
 export function buildWebNfcUrl(name) {
-  return `${WEB_ORIGIN}/api=${encodeURIComponent(normalizeName(name))}`;
+  return `${WEB_ORIGIN}/name=${encodeURIComponent(normalizeName(name))}`;
 }

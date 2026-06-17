@@ -42,7 +42,7 @@ export default function App() {
 
       <View style={styles.hero}>
         <Text style={styles.kicker}>NFC client app</Text>
-        <Text style={styles.greeting}>{name}님 안녕하세요</Text>
+        <Text style={styles.greeting}>{name}님 안녕하세요!</Text>
         <Text style={styles.body}>
           NFC URL이 웹을 거쳐 앱 딥링크로 들어오면, 앱은 전달받은 이름을 화면에 표시합니다.
         </Text>
